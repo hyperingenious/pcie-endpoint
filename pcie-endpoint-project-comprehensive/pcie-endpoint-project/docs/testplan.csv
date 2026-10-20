@@ -1,0 +1,65 @@
+Requirement ID,Area,Test Name,Stimulus,Expected Result,Test Class,Status
+CFG-01,Configuration,pcie_config_reset_test,Apply reset and read all implemented config fields,Specified reset values observed,directed,implemented
+CFG-02,Configuration,pcie_config_read_test,Read every implemented register/field class,Correct values and response metadata,directed,implemented
+CFG-03,Configuration,pcie_config_write_test,Write writable fields and verify masks,Only permitted bits change,directed,implemented
+CFG-04,Configuration,pcie_config_ro_reserved_test,Write read-only/reserved fields,Documented behavior; no prohibited state change,directed,implemented
+CFG-05,Configuration,pcie_capability_walk_test,Walk implemented capability list,"Pointers, IDs, lengths and values are consistent",directed,implemented
+BAR-01,BAR,pcie_bar_region_test,Access each implemented BAR region,Correct region selected,directed,implemented
+BAR-02,BAR,pcie_bar_boundary_test,Access first/last valid locations and boundaries,Correct decode and no aliasing,directed,implemented
+BAR-03,BAR,pcie_unmapped_address_test,Access unmapped/out-of-range address,Documented rejection; no side effects,directed,implemented
+MEM-01,Memory,pcie_mem_single_write_read_test,Single-DWORD write then read,Readback equals written data,directed,implemented
+MEM-02,Memory,pcie_mem_multi_dword_test,Multi-DWORD read/write at supported sizes,All supported data words correct,directed,implemented
+MEM-03,Memory,pcie_read_after_write_test,Write then read same region,Expected updated data returned,directed,implemented
+MEM-04,Memory,pcie_data_pattern_test,"Zero, ones, alternating, walking-one/zero",Exact data preservation,directed,implemented
+BE-01,Byte enables,pcie_byte_enable_full_test,Full byte enable writes,All enabled bytes update,directed,implemented
+BE-02,Byte enables,pcie_byte_enable_sparse_test,Sparse/partial byte writes,Only enabled bytes update,directed,implemented
+BE-03,Byte enables,pcie_byte_enable_boundary_test,First/last DW BE legal boundary patterns,Address and byte selection correct,directed,implemented
+TLP-01,TLP decode,pcie_supported_tlp_matrix_test,Exercise each supported Fmt/Type,Fields decoded correctly,directed,implemented
+TLP-02,TLP decode,pcie_unsupported_tlp_test,Send unsupported type/format,Defined error behavior; no unintended side effects,directed,implemented
+LEN-01,Length,pcie_length_min_test,Minimum supported request length,Correct operation,directed,implemented
+LEN-02,Length,pcie_length_max_test,Maximum supported request length,Correct operation within documented limit,directed,implemented
+LEN-03,Length,pcie_length_invalid_test,Invalid/oversized/inconsistent length,Detected and handled per contract,directed,implemented
+CPL-01,Completion,pcie_completion_header_test,Issue requests requiring Completion,"IDs, Tag, status, byte count and lower address correct",directed,implemented
+CPL-02,Completion,pcie_completion_payload_test,Read requests with data payload,Payload and length correct,directed,implemented
+CPL-03,Completion,pcie_unexpected_completion_test,Inject unsolicited/mismatched Completion,Checker detects mismatch; state not corrupted,directed,implemented
+B2B-01,Back-to-back,pcie_write_write_test,Consecutive writes,Both writes complete correctly,directed,implemented
+B2B-02,Back-to-back,pcie_read_read_test,Consecutive reads,Responses correctly associated,directed,implemented
+B2B-03,Back-to-back,pcie_write_read_test,Write followed by read,Ordering and data correct,directed,implemented
+B2B-04,Back-to-back,pcie_read_write_test,Read followed by write,Ordering and data correct,directed,implemented
+BP-01,Backpressure,pcie_request_backpressure_test,Hold request ready low,No corruption/duplicate acceptance,directed,implemented
+BP-02,Backpressure,pcie_response_backpressure_test,Stall response acceptance,Response stable until accepted,directed,implemented
+RST-01,Reset,pcie_reset_idle_test,Reset while idle,Specified reset state,directed,implemented
+RST-02,Reset,pcie_reset_active_test,Reset during packet processing,Defined cancellation/flush behavior,directed,implemented
+RST-03,Reset,pcie_reset_recovery_test,Reset then send valid traffic,Clean recovery,directed,implemented
+ERR-01,Errors,pcie_malformed_header_test,Malformed supported-header fields,Detection and defined response,directed,implemented
+ERR-02,Errors,pcie_invalid_address_test,Invalid address/access,No prohibited state change,directed,implemented
+ERR-03,Errors,pcie_unsupported_request_test,Unsupported request type,Defined error/reporting behavior,directed,implemented
+RND-01,Random,pcie_random_legal_test,Constrained-random legal requests,Scoreboard/assertions pass; bins sampled,directed,implemented
+RND-02,Random,pcie_random_negative_test,Constrained malformed/error injection,Expected detection; no unrelated corruption,directed,implemented
+STR-01,Stress,pcie_stress_test,Long randomized traffic and stalls,"No unexplained mismatch, timeout or deadlock",directed,implemented
+TAG-01,Requester,pcie_tag_lifecycle_test,"Allocate, use, release Tags",Lifecycle and reuse correct,directed,implemented
+TAG-02,Requester,pcie_tag_boundary_test,Exercise Tag space boundaries,No illegal active Tag reuse,directed,implemented
+REQ-01,Requester,pcie_multiple_outstanding_test,Issue several outstanding requests,All requests accounted for,directed,implemented
+REQ-02,Requester,pcie_completion_reorder_test,Return completions in permitted different order,Each completion matches original request,directed,implemented
+CPL-04,Requester,pcie_split_completion_test,Split request response into multiple Completions,Byte count/address/data progression correct,directed,implemented
+ORD-01,Ordering,pcie_ordering_rules_test,Exercise supported ordering attributes/classes,No prohibited ordering,directed,implemented
+TIME-01,Requester,pcie_completion_timeout_test,Withhold Completion to timeout boundary,Correct timeout/recovery behavior,directed,implemented
+DLL-01,Data Link,pcie_dll_state_test,Exercise modeled DLL states and reset,Legal state progression and gating,directed,implemented
+DLL-02,Data Link,pcie_dllp_codec_test,Encode/decode supported DLLPs,Fields and integrity correct,directed,implemented
+DLL-03,Data Link,pcie_lcrc_reference_test,Compare LCRC against independent vectors,All reference vectors match,directed,implemented
+DLL-04,Data Link,pcie_lcrc_fault_test,Corrupt TLP integrity bits,Bad TLP not forwarded; recovery triggered,directed,implemented
+DLL-05,Data Link,pcie_sequence_wrap_test,Drive sequence number through wrap,Correct sequence behavior,directed,implemented
+DLL-06,Data Link,pcie_ack_test,Acknowledge buffered TLPs,Acknowledged entries released correctly,directed,implemented
+DLL-07,Data Link,pcie_nak_replay_test,Inject NAK,Required buffered TLPs replay in order,directed,implemented
+DLL-08,Data Link,pcie_replay_timeout_test,Suppress ACK until timeout,Replay initiated at defined condition,directed,implemented
+DLL-09,Data Link,pcie_replay_buffer_boundary_test,Fill/drain replay buffer,No overwrite or premature release,directed,implemented
+FC-01,Flow control,pcie_fc_initialization_test,Initialize implemented credit classes,Credit exchange reaches defined ready state,directed,implemented
+FC-02,Flow control,pcie_fc_exhaustion_test,Consume available credits,Traffic blocked when insufficient credit,directed,implemented
+FC-03,Flow control,pcie_fc_return_test,Return credits after receive processing,Credit accounting restored correctly,directed,implemented
+FC-04,Flow control,pcie_fc_invalid_update_test,Inject invalid credit update,Checker/error policy exercised,directed,implemented
+LINK-01,Link model,pcie_link_down_test,Drop link while idle and active,Traffic gated and state cleaned per contract,directed,implemented
+LINK-02,Link model,pcie_link_recovery_test,Trigger modeled recovery,Return to active or report failure correctly,directed,implemented
+PHY-01,Link model,pcie_packet_fault_injection_test,Drop/delay/corrupt/duplicate packets,Fault model deterministic and logged,directed,implemented
+DMA-01,Requester,pcie_dma_write_test,Endpoint writes host memory,Host memory model observes correct write,directed,implemented
+DMA-02,Requester,pcie_dma_read_test,Endpoint reads host memory,Returned data correctly matched,directed,implemented
+INT-01,Interrupts,pcie_interrupt_test,Trigger supported MSI/MSI-X mechanism,Expected interrupt transaction/behavior observed,directed,implemented
